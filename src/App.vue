@@ -1,7 +1,7 @@
 <template>
 <div class="todo-container">
     <div class="todo-wrap">
-      <Header/>
+      <Header :addTodo='addTodo'/>
 			<Main :todos='todos'/>
 			<Footer/>
     </div>
@@ -21,6 +21,12 @@ export default{
 			]
 		}
 	},
+	methods: {
+			// 添加todo
+			addTodo (todo) {
+				this.todos.unshift(todo)
+			}
+		},
 	components: {
 		Header,
 		Main,
