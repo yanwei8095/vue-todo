@@ -1,14 +1,14 @@
 <template>
 <!-- 组件中的模板能直接访问组件对象中的属性 -->
  <ul class="todo-main">
-        <Item v-for="(todo,index) in todos" :key="index" :todo="todo"/>
+        <Item v-for="(todo,index) in todos" :key="index" :todo="todo" :deleteTodo="deleteTodo" :index="index"/>
  </ul>
 </template>
 <script>
 import Item from './Item'
 	export default {
 		// 声明接收属性
-		props: ['todos'],
+		props: ['todos', 'deleteTodo'],
 		components: {
 			Item
 		}
