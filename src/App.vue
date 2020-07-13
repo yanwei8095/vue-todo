@@ -3,7 +3,7 @@
     <div class="todo-wrap">
       <Header :addTodo='addTodo'/>
 			<Main :todos='todos' :deleteTodo="deleteTodo"/>
-			<Footer/>
+			<Footer :todos="todos" :selectAllTodos="selectAllTodos"/>
     </div>
   </div>
 </template>
@@ -29,6 +29,10 @@ export default{
 			// 删除todo
 			deleteTodo (index) {
 				this.todos.splice(index, 1)
+			},
+			// 对所有todo进行全选或全不选
+			selectAllTodos (isCheck) {
+				this.todos.forEach(todo => { todo.completed = isCheck })
 			}
 		},
 	components: {
