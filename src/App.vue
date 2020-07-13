@@ -1,15 +1,30 @@
 <template>
-<div>
-<h2>App组件</h2>
-<img src="./assets/logo.png" alt="logo">
-<HelloWorld/>
-</div>
+<div class="todo-container">
+    <div class="todo-wrap">
+      <Header/>
+			<Main :todos='todos'/>
+			<Footer/>
+    </div>
+  </div>
 </template>
 <script>
-import HelloWorld from './components/HelloWorld'
+import Header from './components/Header'
+import Main from './components/Main'
+import Footer from './components/Footer'
 export default{
+	data () {
+		return {
+			todos: [
+				{completed: false, title: '吃饭'},
+				{completed: true, title: '睡觉'},
+				{completed: false, title: '写代码'}
+			]
+		}
+	},
 	components: {
-		HelloWorld
+		Header,
+		Main,
+		Footer
 	}
 }
 </script>
