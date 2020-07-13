@@ -2,7 +2,7 @@
 <div class="todo-container">
     <div class="todo-wrap">
       <Header :addTodo='addTodo'/>
-			<Main :todos='todos' :deleteTodo="deleteTodo"/>
+			<Main :todos='todos' :deleteTodo="deleteTodo" :selectTodo="selectTodo"/>
 			<Footer :todos="todos" :selectAllTodos="selectAllTodos" :deleteAllCompleted="deleteAllCompleted"/>
     </div>
   </div>
@@ -36,6 +36,9 @@ export default{
 			// 删除所有completed为true的对象
 			deleteAllCompleted () {
 			this.todos =	this.todos.filter(todo => !todo.completed) // 保留未勾选的,过滤掉勾选的
+			},
+			selectTodo (todo, isCheck) {
+				todo.completed = isCheck
 			}
 		},
 	watch: {
