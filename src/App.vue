@@ -3,22 +3,21 @@
     <div class="todo-wrap">
       <Header :addTodo='addTodo'/>
 			<Main :todos='todos' :deleteTodo="deleteTodo"/>
-			<Footer :todos="todos" :selectAllTodos="selectAllTodos"/>
+			<Footer :todos="todos" :selectAllTodos="selectAllTodos" :deleteAllCompleted="deleteAllCompleted"/>
     </div>
   </div>
 </template>
 <script>
-import Header from './components/Header'
+// import Header from './components/Header'
 import Main from './components/Main'
 import Footer from './components/Footer'
+import storageUtils from "./utils/storageUtils"
+
 export default{
 	data () {
 		return {
-			todos: [
-				{completed: false, title: '吃饭'},
-				{completed: true, title: '睡觉'},
-				{completed: false, title: '写代码'}
-			]
+			// todos: JSON.parse(localStorage.getItem("todos_key") || "[]") // localStorage.getItem("todos_key")的值是字符串,也有可能是null
+			todos: storageUtils.getTodos()
 		}
 	},
 	methods: {
@@ -33,13 +32,29 @@ export default{
 			// 对所有todo进行全选或全不选
 			selectAllTodos (isCheck) {
 				this.todos.forEach(todo => { todo.completed = isCheck })
+			},
+			// 删除所有completed为true的对象
+			deleteAllCompleted () {
+			this.todos =	this.todos.filter(todo => !todo.completed) // 保留未勾选的,过滤掉勾选的
 			}
 		},
-	components: {
-		Header,
-		Main,
-		Footer
-	}
+	watch: {
+		todos: {
+			deep: true, // 深度监视
+			handler: function (val) { // val:todos最新的值,todos发生任何变化时都会调用
+			// 将todos最新的值保存到local
+			storageUtils.saveTodos(val)
+			// localStorage.setItem("todos_key", JSON.stringify(val))
+			// local里面只能存文本,不能存对象，传入对象会调用对象的toString(),会得到[{object,object}],里面的对象没法再解析出来
+			}
+			// handler:storageUtils.saveTodos
+		}
+	},
+		components: {
+			// Header,
+			Main,
+			Footer
+		}
 }
 </script>
 <style lang='stylus' rel='stylesheet/stylus' scoped>
