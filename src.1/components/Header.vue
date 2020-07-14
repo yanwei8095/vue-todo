@@ -5,12 +5,12 @@
 </template>
 <script>
 export default {
- /*  props: {
+  props: {
     addTodo: {
       type: Function,
       required: true
     }
-  }, */
+  },
   data () {
     return {
       title: ""
@@ -30,9 +30,7 @@ export default {
         completed: false
       };
       // 3.调用addTodo添加todo并显示
-      // this.addTodo(todo);
-      // 触发事件
-      this.$emit('addTodo', todo)
+      this.addTodo(todo);
       // 4.清空输入框
       this.title = "";
     }
