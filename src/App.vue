@@ -37,6 +37,7 @@ export default{
 			deleteAllCompleted () {
 			this.todos =	this.todos.filter(todo => !todo.completed) // 保留未勾选的,过滤掉勾选的
 			},
+			// 是否勾选或者不勾选
 			selectTodo (todo, isCheck) {
 				todo.completed = isCheck
 			}

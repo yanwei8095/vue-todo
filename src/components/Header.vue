@@ -25,6 +25,7 @@ export default {
       }
       // 2.封装成todo对象
       const todo = {
+        id: Date.now(),
         title,
         completed: false
       };

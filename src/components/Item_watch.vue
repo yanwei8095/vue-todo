@@ -19,7 +19,8 @@
 		data () {
 			return {
 				bgColor: 'white',
-				isShow: false
+				isShow: false,
+				completed: false // 需要根据传进来的todo的completed值修改
 			}
 		},
 		// 为第一次渲染显示做一个同步的准备工作
@@ -48,18 +49,17 @@
 				}
 			}
 		},
-		computed: {
-			completed: {
-				get () {
-					// console.log("get()")
-					return this.todo.completed
-					// 一旦todo中的completed发生改变,立即改变completed的值
-				},
-				set (value) {
-					// console.log("set()")
-					this.selectTodo(this.todo, value)
-					// value是completed最新的值，是否勾选上,completed的值发生变化，就会调用下方的方法
-				}
+		// 一旦data中的completed发生改变,立即改变todo中completed的值
+		watch: { // 基本数据类型,没有深度监视
+			completed (value) { // value是completed最新的值
+			// 最终目的是为了this.todo.completed=value,不能在子组件中直接修改父组件的状态数据
+			this.selectTodo(this.todo, value)
+			// console.log('watch--completed')
+			},
+			// 监视性能不好，导致重复调用
+			'todo.completed' (val) {
+				this.completed = val
+				// console.log('watch--todo.completed')
 			}
 		}
  }
