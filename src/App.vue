@@ -2,7 +2,7 @@
 <div class="todo-container">
     <div class="todo-wrap">
       <Header @addTodo='addTodo'/>
-			<Main :todos='todos'  :selectTodo="selectTodo"/>
+			<Main :todos='todos'/>
 			<Footer :todos="todos" :selectAllTodos="selectAllTodos" :deleteAllCompleted="deleteAllCompleted"/>
     </div>
   </div>
@@ -13,7 +13,7 @@ import Main from './components/Main'
 import Footer from './components/Footer'
 import storageUtils from "./utils/storageUtils"
 import PubSub from "pubsub-js"
-
+import vm from "./vm"
 export default{
 	data () {
 		return {
@@ -25,6 +25,10 @@ export default{
 			// 订阅消息
 		PubSub.subscribe('deleteTodo', (msgName, index) => {
 			this.deleteTodo(index)
+		});
+		// 绑定自定义监听
+		vm.$on('selectTodo', (todo, isCheck) => {
+			this.selectTodo(todo, isCheck)
 		})
 		},
 	methods: {

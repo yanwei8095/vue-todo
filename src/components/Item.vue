@@ -9,13 +9,14 @@
 </template>
 <script>
 import PubSub from "pubsub-js"
+import vm from "../vm"
 	export default {
 		// 声明接收属性
 		props: {
 			todo: Object,
 			// deleteTodo: Function,
-			index: Number,
-			selectTodo: Function
+			index: Number
+			// selectTodo: Function
 		},
 		data () {
 			return {
@@ -60,8 +61,10 @@ import PubSub from "pubsub-js"
 				},
 				set (value) {
 					// console.log("set()")
-					this.selectTodo(this.todo, value)
+					// this.selectTodo(this.todo, value)
 					// value是completed最新的值，是否勾选上,completed的值发生变化，就会调用下方的方法
+					// 触发事件
+					vm.$emit('selectTodo', this.todo, value)
 				}
 			}
 		}
