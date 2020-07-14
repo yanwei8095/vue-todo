@@ -2,7 +2,7 @@
 <div class="todo-container">
     <div class="todo-wrap">
       <Header @addTodo='addTodo'/>
-			<Main :todos='todos' :deleteTodo="deleteTodo" :selectTodo="selectTodo"/>
+			<Main :todos='todos'  :selectTodo="selectTodo"/>
 			<Footer :todos="todos" :selectAllTodos="selectAllTodos" :deleteAllCompleted="deleteAllCompleted"/>
     </div>
   </div>
@@ -12,6 +12,7 @@
 import Main from './components/Main'
 import Footer from './components/Footer'
 import storageUtils from "./utils/storageUtils"
+import PubSub from "pubsub-js"
 
 export default{
 	data () {
@@ -20,6 +21,12 @@ export default{
 			todos: storageUtils.getTodos()
 		}
 	},
+		mounted () {
+			// 订阅消息
+		PubSub.subscribe('deleteTodo', (msgName, index) => {
+			this.deleteTodo(index)
+		})
+		},
 	methods: {
 			// 添加todo
 			addTodo (todo) {

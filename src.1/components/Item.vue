@@ -42,7 +42,7 @@
 					this.isShow = false
 				}
 			},
-			deleteItem (index) {
+			deleteItem () {
 				if (window.confirm(`确认删除${this.todo.title}吗?`)) {
 				this.deleteTodo(this.index)
 				}
